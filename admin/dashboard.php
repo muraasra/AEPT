@@ -1,11 +1,17 @@
 <?php
 session_start();
-
+require "Database.php";
 // Vérification de la connexion
 if (!isset($_SESSION['user'])) {
     header('Location: index.php');
     exit;
 }
+$db=Database::connect();
+$stmtPro=$db->query("SELECT * FROM projets  ;");
+$stmtAc=$db->query("SELECT * FROM actualites  ;");
+$stmtPa=$db->query("SELECT * FROM partenaires  ;");
+$stmtCo=$db->query("SELECT * FROM contacts  ;");
+$stmtTes=$db->query("SELECT * FROM témoignage  ;");
 
 
 
@@ -44,14 +50,14 @@ if (!isset($_SESSION['user'])) {
 
 
 
-      <header class="site-navbar site-navbar-target" role="banner" style="background: url(../images/img_1.jpg); position: fixed;">
+      <header class="site-navbar site-navbar-target" role="banner" style="background: url(../images/img_1.jpg);">
 
         <div class="container">
           <div class="row align-items-center position-relative">
 
             <div class="col-3 ">
               <div class="site-logo">
-                <a href="dashbord.html"> <b> A.E.P.T. Admin  </b></a>
+                <a href="dashbord.php"> <b> A.E.P.T. Admin  </b></a>
               </div>
             </div>
 
@@ -90,8 +96,47 @@ if (!isset($_SESSION['user'])) {
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Number of project:  </div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">58</div>
+                    Number of Project: <span class="h5 mb-0 font-weight-bold text-gray-800"><?php echo " ".$stmtPro->rowCount(); ?></span> </div>
+                    
+                    <div class="text-xs font-weight-bold text-danger  mb-1">
+                       Last Project:  </div>
+                    <div class="text-xs   text-capitalize ">
+                     <?php
+                      foreach ($stmtPro as $item){
+                            $stmt=$db->query("SELECT * FROM regions WHERE id=".$item['region_id']." ;");
+                            $stmt1=$db->query("SELECT * FROM categories WHERE id=".$item['categorie_id']." ;");
+                            $stmtTmp=$stmt->fetch();
+                            $stmt1Tmp=$stmt1->fetch();
+                            echo $item['titre'].": <b>".$stmtTmp['nom'].", ".$stmt1Tmp["nom"]."</b> <br>";
+                      }
+                     
+                     ?>  
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-danger shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                        Number of Actuality: <span class="h5 mb-0 font-weight-bold text-gray-800"><?php echo " ".$stmtAc->rowCount(); ?></span> </div>
+                    
+                    <div class="text-xs font-weight-bold text-danger  mb-1">
+                       Last Actuality:  </div>
+                        <div class="text-xs   text-capitalize ">
+                     <?php
+                      foreach ($stmtAc as $item){
+                            $stmt=$db->query("SELECT * FROM projets WHERE id=".$item['projet_id']." ;");
+                            $stmtTmp=$stmt->fetch();
+                            echo $item['titre'].": <b>".$stmtTmp['titre']."</b> <br>";
+                      }
+                     
+                     ?>  
+                    </div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -102,14 +147,25 @@ if (!isset($_SESSION['user'])) {
 </div>
 
 
+
 <div class="col-xl-3 col-md-6 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                        Number of partner : </div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">58</div>
+                        Number of partner : <span class="h5 mb-0 font-weight-bold text-gray-800"><?php echo "  ".$stmtPa->rowCount(); ?></span></div>
+                    
+                    <div class="text-xs font-weight-bold text-success  mb-1">
+                       Last Partner:  </div>
+                    <div class="text-xs   text-capitalize ">
+                     <?php
+                      foreach ($stmtPa as $item){
+                            echo $item['nom']." <br>";
+                      }
+                     
+                     ?>  
+                    </div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -124,8 +180,18 @@ if (!isset($_SESSION['user'])) {
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                        Number of contact : </div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">58</div>
+                        Number of contact : <span class="h5 mb-0 font-weight-bold text-gray-800"><?php echo " ".$stmtCo->rowCount(); ?></span></div>
+                    
+                    <div class="text-xs font-weight-bold text-info  mb-1">
+                       Last Contact:  </div>
+                    <div class="text-xs   text-capitalize ">
+                     <?php
+                      foreach ($stmtCo as $item){
+                            echo $item['nom']." <br>";
+                      }
+                     
+                     ?>  
+                    </div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -140,8 +206,17 @@ if (!isset($_SESSION['user'])) {
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                        Number of testimonails : </div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">58</div>
+                        Number of testimonails : <span class="h5 mb-0 font-weight-bold text-gray-800"><?php echo " ".$stmtTes->rowCount(); ?></span></div>
+                        <div class="text-xs font-weight-bold text-success  mb-1">
+                       Last Contact:  </div>
+                    <div class="text-xs   text-capitalize ">
+                     <?php
+                      foreach ($stmtTes as $item){
+                            echo $item['nom']." <br>";
+                      }
+                     
+                     ?>  
+                    </div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

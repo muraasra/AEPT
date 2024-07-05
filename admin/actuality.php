@@ -71,7 +71,8 @@ if (!isset($_SESSION['user'])) {
                   <li><a href="contact.php" class="nav-link ">Contact</a></li>
                   <li><a href="partner.php" class="nav-link ">partner</a></li>
                   <li ><a href="testimonies.php" class="nav-link ">Testimonies</a></li>
-                </ul>
+                  <li ><a href="logout.php" class="nav-link ">Log-out</a></li>
+                  </ul>
               </nav>
             </div>
 
@@ -86,14 +87,26 @@ if (!isset($_SESSION['user'])) {
 
 
         <h1>Gestion des actualites</h1>
-        <a href="actuality_add.php" class="btn btn-info" style="position: absolute;right:0">+ Ajouter une actuality   </a>
+        <?php if (!empty($_GET['action'])) {
+                   echo "<div class='alert alert-success'> L'actualité <b>".checkInput($_GET['action'])." </b>  a été supprimer avec succès</div>";
+                  }
+                  function checkInput($data)
+{
+ $data = trim($data);
+ $data = stripslashes($data);
+ $data = htmlspecialchars($data);
+
+    return $data;
+};
+    ?>
+        <a href="actuality_add.php" class="btn btn-info" style="position: absolute;right:0"><span class="icon-plus"></span> Add new  </a>
         <table class="table table-striped table-bordered table-borderless " style="justify-content: space-evenly;">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Date Publication</th>
-                    <th>Actions</th>
+                    <th class="col-lg-3  col-md-2">Nom</th>
+                    <th class="col-lg-4 col-md-5">Description</th>
+                    <th class="col-lg-2 col-md-2">Date Publication</th>
+                    <th class="col-lg-3  col-md-3">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -104,8 +117,10 @@ if (!isset($_SESSION['user'])) {
                         <td><?php echo $actuality['description']; ?></td>
                         <td><?php echo $actuality['date_publication']; ?></td>
                         <td>
-                            <a href="actuality_edit.php?id=<?php echo $actuality['id']; ?>" class="btn btn-info">Modifier</a>
-                            <a href="actuality_delete.php?id=<?php echo $actuality['id']; ?>" class="btn btn-danger">Supprimer</a>
+                            <a href="actuality_edit.php?id=<?php echo $actuality['id']; ?>" class="btn btn-info"> <span class="icon-edit"></span></a>
+                            <a href="actuality_view_admin.php?id=<?php echo $actuality['id']; ?>" class="btn btn-dark"> <span class="icon-eye"></span></a>
+                            <?php echo "<button class='btn btn-danger' onclick=\"confirmDelete(" . $actuality["id"] . ")\"><span class='icon-trash-o'></span></button>"; ?>
+                            
                         </td>
                     </tr>
                 <?php } ?>
@@ -115,7 +130,14 @@ if (!isset($_SESSION['user'])) {
                     
 
 
-
+<script>
+function confirmDelete(id) {
+    if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+        // Exécuter la requête de suppression en PHP
+        window.location.href = "delete/actuality.php?id=" + id;
+    }
+}
+</script>
 
 
 

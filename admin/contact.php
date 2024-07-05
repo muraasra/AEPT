@@ -71,6 +71,7 @@ if (!isset($_SESSION['user'])) {
                   <li class="active"><a href="contact.php" class="nav-link ">Contact</a></li>
                   <li><a href="partner.php" class="nav-link ">partner</a></li>
                   <li ><a href="testimonies.php" class="nav-link ">Testimonies</a></li>
+                  <li ><a href="logout.php" class="nav-link ">Log-out</a></li>
                  
                 </ul>
               </nav>
@@ -87,14 +88,14 @@ if (!isset($_SESSION['user'])) {
 
 
         <h1>Gestion des Contacts</h1>
-        <a href="contact_add.php" class="btn btn-info" style="position: absolute;right:0">+ Ajouter un Contact  </a>
+        <a href="contact_add.php" class="btn btn-info" style="position: absolute;right:0"><span class="icon-plus"></span> Add new    </a>
         <table class="table table-striped table-bordered table-borderless " style="justify-content: space-evenly;">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>email</th>
-                    <th>message</th>
-                    <th>Actions</th>
+                    <th class="col-lg-2  col-md-2">Nom</th>
+                    <th class="col-lg-3 col-md-2">email</th>
+                    <th class="col-lg-4  col-md-4">message</th>
+                    <th class="col-lg-3  col-md-4">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -105,9 +106,9 @@ if (!isset($_SESSION['user'])) {
                         <td><?php echo $contact['email']; ?></td>
                         <td><?php echo $contact['message']; ?></td>
                         <td>
-                            <a href="contact_edit.php?id=<?php echo $contact['id']; ?>" class="btn btn-info">Modifier</a>
-                            <a href="contact_delete.php?id=<?php echo $contact['id']; ?>" class="btn btn-danger">Supprimer</a>
-                        </td>
+                            <a href="contact_edit.php?id=<?php echo $contact['id']; ?>" class="btn btn-info"><span class="icon-edit"></span></a>
+                            <?php echo "<button class='btn btn-danger' onclick=\"confirmDelete(" . $contact["id"] . ")\"><span class='icon-trash-o'></span></button>"; ?>
+                            </td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -115,6 +116,14 @@ if (!isset($_SESSION['user'])) {
     
                     
 
+        <script>
+function confirmDelete(id) {
+    if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+        // Exécuter la requête de suppression en PHP
+        window.location.href = "delete/contact.php?id=" + id;
+    }
+}
+</script>
 
 
 

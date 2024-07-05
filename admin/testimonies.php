@@ -71,7 +71,8 @@ if (!isset($_SESSION['user'])) {
                   <li><a href="contact.php" class="nav-link ">Contact</a></li>
                   <li><a href="partner.php" class="nav-link ">partner</a></li>
                   <li class="active"><a href="testimonies.php" class="nav-link ">Testimonies</a></li>
-                </ul>
+                  <li ><a href="logout.php" class="nav-link ">Log-out</a></li>
+                  </ul>
               </nav>
             </div>
 
@@ -86,13 +87,14 @@ if (!isset($_SESSION['user'])) {
 
 
         <h1>Gestion des Temoignages</h1>
-        <a href="testimonies_add.php" class="btn btn-info" style="position: absolute;right:0">+ Ajouter un Temoignage   </a>
+        <a href="testimonies_add.php" class="btn btn-info" style="position: absolute;right:0"><span class="icon-plus"></span> Add new    </a>
         <table class="table table-striped table-bordered table-borderless " style="justify-content: space-evenly;">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Actions</th>
+                  
+                    <th class="col-lg-3 col-md-2">Nom</th>
+                    <th class="col-lg-6 col-md-6">Description</th>
+                    <th class="col-lg-3 col-md-4">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -102,16 +104,23 @@ if (!isset($_SESSION['user'])) {
                         <td><?php echo $testimonie['nom']; ?></td>
                         <td><?php echo $testimonie['description']; ?></td>
                         <td>
-                            <a href="testimonies_edit.php?id=<?php echo $testimonie['id']; ?>" class="btn btn-info">Modifier</a>
-                            <a href="testimonies_delete.php?id=<?php echo $testimonie['id']; ?>" class="btn btn-danger">Supprimer</a>
-                        </td>
+                            <a href="testimonies_edit.php?id=<?php echo $testimonie['id']; ?>" class="btn btn-info"><span class="icon-edit"></span></a>
+                            <?php echo "<button class='btn btn-danger' onclick=\"confirmDelete(" . $testimonie["id"] . ")\"><span class='icon-trash-o'></span></button>"; ?>
+                            </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
     
                     
-
+        <script>
+function confirmDelete(id) {
+    if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+        // Exécuter la requête de suppression en PHP
+        window.location.href = "delete/testimonies.php?id=" + id;
+    }
+}
+</script>
 
 
 

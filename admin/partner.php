@@ -67,10 +67,11 @@ if (!isset($_SESSION['user'])) {
               <ul class="site-menu main-menu js-clone-nav ml-auto ">
                   <li ><a href="dashboard.php" class="nav-link ">Home</a></li>
                   <li ><a  href="project.php" class="nav-link ">Project</a></li>
-                  <li ><a href="actuality.html" class="nav-link ">Actuality</a></li>
+                  <li ><a href="actuality.php" class="nav-link ">Actuality</a></li>
                   <li><a href="contact.php" class="nav-link ">Contact</a></li>
                   <li class="active"><a href="partner.php" class="nav-link ">partner</a></li>
                   <li ><a href="testimonies.php" class="nav-link ">Testimonies</a></li>
+                  <li ><a href="logout.php" class="nav-link ">Log-out</a></li>
 
                 </ul>
               </nav>
@@ -87,13 +88,13 @@ if (!isset($_SESSION['user'])) {
 
 
         <h1>Gestion des Partenaires</h1>
-        <a href="partner_add.php" class="btn btn-info" style="position: absolute;right:0">+ Ajouter un Partenaire  </a>
+        <a href="partner_add.php" class="btn btn-info" style="position: absolute;right:0"><span class="icon-plus"></span> Add new    </a>
         <table class="table table-striped table-bordered table-borderless " style="justify-content: space-evenly;">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Actions</th>
+                    <th class="col-lg-3 col-md-2">Nom</th>
+                    <th class="col-lg-6 col-md-6">Lien du site</th>
+                    <th class="col-lg-3 col-md-4">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,9 +104,9 @@ if (!isset($_SESSION['user'])) {
                         <td><?php echo $partner['nom']; ?></td>
                         <td><?php echo $partner['lien_site']; ?></td>
                         <td>
-                            <a href="partner_edit.php?id=<?php echo $partner['id']; ?>" class="btn btn-info">Modifier</a>
-                            <a href="partner_delete.php?id=<?php echo $partner['id']; ?>" class="btn btn-danger">Supprimer</a>
-                        </td>
+                            <a href="partner_edit.php?id=<?php echo $partner['id']; ?>" class="btn btn-info"><span class="icon-edit"></span></a>
+                            <?php echo "<button class='btn btn-danger' onclick=\"confirmDelete(" . $partner["id"] . ")\"><span class='icon-trash-o'></span></button>"; ?>
+                            </td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -113,7 +114,14 @@ if (!isset($_SESSION['user'])) {
     
                     
 
-
+        <script>
+function confirmDelete(id) {
+    if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+        // Exécuter la requête de suppression en PHP
+        window.location.href = "delete/partner.php?id=" + id;
+    }
+}
+</script>
 
 
 

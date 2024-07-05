@@ -67,9 +67,9 @@ if (!empty($_POST)) {
 }
 function checkInput($data)
 {
-    // $data = trim($data);
-    // $data = stripslashes($data);
-    // $data = htmlspecialchars($data);
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
 
     return $data;
 };
@@ -110,32 +110,27 @@ function checkInput($data)
             </h1><br>
             <form class="form" action="partner_add.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Nom:</label>
+                    <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $name ?>">
                     <span class="help-inline"><?php echo $nameError; ?></span>
 
                 </div>
                 <div class="form-group">
-                    <label for="lienSite">lienSite:</label>
+                    <label for="lienSite">Adress web:</label>
                     <input type="text" class="form-control" name="lienSite" id="lienSite" placeholder="lienSite" value="<?php echo $lienSite ?>">
                     <span class="help-inline"><?php echo $lienSiteError; ?></span>
                 </div>
                 
-                </div>
                 <div class="form-group">
-                    <label for="image">Selectionner une image: </label>
+                    <label for="image">Selection of image: </label>
                     <input type="file" id="image" name="image">
                     <span class="help-inline"><?php echo $imageError; ?></span>
                 </div>
 
                 <br>
-                    <button  type="submit">Se connecter</button>
-                    <input type="submit" name="submit" value="valid">
                 <div class="form-action">
-                    <button type="submit" class="btn btn-success "><span class="glyphicon 
-                    glyphicon-pencil"></span> Ajouter</button>
-                    <a class="btn btn-primary " href="partner.php"><span class="glyphicon 
-                    glyphicon-arrow-left"></span> Retour</a>
+                <a class="btn btn-primary " href="partner.php"><span class="icon-arrow-left"></span> Back</a>
+                <button type="submit" class="btn btn-info "><span class="icon-plus"></span> Add</button>
 
                 </div>
             </form>

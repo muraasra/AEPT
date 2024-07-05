@@ -76,9 +76,9 @@ if (!empty($_POST)) {
 }
 function checkInput($data)
 {
-    // $data = trim($data);
-    // $data = stripslashes($data);
-    // $data = htmlspecialchars($data);
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
 
     return $data;
 };
@@ -109,7 +109,7 @@ function checkInput($data)
 
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../css/style.css">
-    <title>add Actuality- Administration AEPT</title>
+    <title>Add Actuality- Administration AEPT</title>
 </head>
 
 <body>
@@ -119,25 +119,25 @@ function checkInput($data)
             </h1><br>
             <form class="form" action="actuality_add.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Nom:</label>
+                    <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $name ?>">
                     <span class="help-inline"><?php echo $nameError; ?></span>
-
                 </div>
+
                 <div class="form-group">
                     <label for="description">Description:</label>
                     <input type="text" class="form-control" name="description" id="description" placeholder="Description" value="<?php echo $description ?>">
                     <span class="help-inline"><?php echo $descriptionError; ?></span>
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-6">
-                    <label for="description">Date publication :</label>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label for="description">Date of publication :</label>
                     <input type="date" class="form-control" name="datePublication" id="datePublication" placeholder="datePublication" value="<?php echo $datePublication ?>">
                     <span class="help-inline"><?php echo $datePublicationError; ?></span>
-                    </div> 
-                </div>
-                
+                </div> 
                 <div class="col-md-6">
+                    <label for="description">Name of project :</label>
                     <select class="form-control" id="projectId" name="projectId">
                         <?php
                         $db = Database::connect();
@@ -149,21 +149,17 @@ function checkInput($data)
                     </select>
                     <span class="help-inline"><?php echo $projectIdError; ?></span>
                 </div>
-                </div>
+          </div>     
                 <div class="form-group">
-                    <label for="image">Selectionner une image: </label>
+                    <label for="image">Selection of image: </label>
                     <input type="file" id="image" name="image">
                     <span class="help-inline"><?php echo $imageError; ?></span>
                 </div>
 
                 <br>
-                    <button  type="submit">Se connecter</button>
-                    <input type="submit" name="submit" value="valid">
                 <div class="form-action">
-                    <button type="submit" class="btn btn-success "><span class="glyphicon 
-                    glyphicon-pencil"></span> Ajouter</button>
-                    <a class="btn btn-primary " href="actuality.php"><span class="glyphicon 
-                    glyphicon-arrow-left"></span> Retour</a>
+                <a class="btn btn-primary " href="actuality.php"><span class="icon-arrow-left"></span> Back</a>
+                <button type="submit" class="btn btn-info "><span class="icon-plus"></span> Add</button>
 
                 </div>
             </form>

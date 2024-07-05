@@ -80,8 +80,8 @@ if (!empty($_POST)) {
             $sql= $db->prepare("UPDATE actualites SET titre=?, image=?, description=?, date_publication=?, projet_id=?  WHERE id=?");
             $stmt = $sql->execute(array($name, $image, $description , $datePublication,$projectId, $id));
         } else { // CAS OU LIMAGE NEST PAS MODIFIER 
-            $sql= $db->prepare("UPDATE actualites SET titre=?, image=?, description=?,  date_publication=?, projet_id=?  WHERE id=?");
-        $stmt = $sql->execute(array($name , $image, $description,  $datePublication,$projectId, $id));
+            $sql= $db->prepare("UPDATE actualites SET titre=?, description=?,  date_publication=?, projet_id=?  WHERE id=?");
+        $stmt = $sql->execute(array($name , $description,  $datePublication,$projectId, $id));
         }
         Database::disconnect();
         header("location: actuality.php");
@@ -113,9 +113,9 @@ if (!empty($_POST)) {
 }
 function checkInput($data)
 {
-    // $data = trim($data);
-    // $data = stripslashes($data);
-    // $data = htmlspecialchars($data);
+ $data = trim($data);
+ $data = stripslashes($data);
+ $data = htmlspecialchars($data);
 
     return $data;
 };
@@ -157,7 +157,7 @@ function checkInput($data)
             </h1><br>
             <form class="form" action="<?php echo'actuality_edit.php?id='.$id;?>" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Nom:</label>
+                    <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $name ?>">
                     <span class="help-inline"><?php echo $nameError; ?></span>
 
@@ -169,13 +169,14 @@ function checkInput($data)
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6">
-                      <label for="description">Date Publication :</label>
+                      <label for="description">Date of Publication :</label>
                     <input type="date" class="form-control" name="datePublication" id="datePublication" placeholder="datePublication" value="<?php echo $datePublication ?>">
                     <span class="help-inline"><?php echo $datePublicationError; ?></span>
                   
                     </div>
                    
                 <div class="col-md-6">
+                <label for="description">Name of project :</label>
                     <select class="form-control" id="projectId" name="projectId">
                         <?php
                         $db = Database::connect();
@@ -205,18 +206,15 @@ function checkInput($data)
                     
                         Database::disconnect();
                         echo $image; ?></p>
-                        <label for="image">Selectionner une image: </label>
+                        <label for="image">Selection image: </label>
                         <input type="file" id="image" name="image" value="<?php echo $image; ?>">
                         <span class="help-inline"><?php echo $imageError; ?></span>
                     </div>
 
                 <br>
                 <div class="form-action">
-                    <button type="submit" class="btn btn-success "><span class="glyphicon 
-                    glyphicon-pencil"></span> Ajouter</button>
-                    <button class="btn btn-login" type="submit">Se connecter</button>
-                    <a class="btn btn-primary " href="project.php"><span class="glyphicon 
-                    glyphicon-arrow-left"></span> Retour</a>
+                <a class="btn btn-primary " href="actuality.php"><span class="icon-arrow-left"></span> Back</a>
+                <button type="submit" class="btn btn-info "><span class="icon-pencil"></span> Edit</button>
 
                 </div>
             </form>

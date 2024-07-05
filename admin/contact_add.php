@@ -41,9 +41,9 @@ if (!empty($_POST)) {
 }
 function checkInput($data)
 {
-    // $data = trim($data);
-    // $data = stripslashes($data);
-    // $data = htmlspecialchars($data);
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
 
     return $data;
 };
@@ -84,29 +84,25 @@ function checkInput($data)
             </h1><br>
             <form class="form" action="contact_add.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Nom:</label>
+                    <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $name ?>">
                     <span class="help-inline"><?php echo $nameError; ?></span>
                 </div>
                 <div class="form-group">
-                    <label for="email">email:</label>
+                    <label for="email">Email:</label>
                     <input type="text" class="form-control" name="email" id="email" placeholder="email" value="<?php echo $email ?>">
                     <span class="help-inline"><?php echo $emailError; ?></span>
                 </div>
                 <div class="form-group">
-                    <label for="message">message:</label>
+                    <label for="message">Message:</label>
                     <input type="text" class="form-control" name="message" id="message" placeholder="message" value="<?php echo $message ?>">
                     <span class="help-inline"><?php echo $messageError; ?></span>
                 </div>
-                </div>
+                
                 <br>
-                    <button  type="submit">Se connecter</button>
-                    <input type="submit" name="submit" value="valid">
                 <div class="form-action">
-                    <button type="submit" class="btn btn-success "><span class="glyphicon 
-                    glyphicon-pencil"></span> Ajouter</button>
-                    <a class="btn btn-primary " href="contact.php"><span class="glyphicon 
-                    glyphicon-arrow-left"></span> Retour</a>
+                <a class="btn btn-primary " href="contact.php"><span class="icon-arrow-left"></span> Back</a>
+                <button type="submit" class="btn btn-info "><span class="icon-plus"></span> Add</button>
 
                 </div>
             </form>

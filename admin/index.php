@@ -4,9 +4,16 @@ session_start();
 
 // Vérification des informations de connexion
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
+    $username = checkInput($_POST['username']);
+    $password = checkInput($_POST['password']);
+    function checkInput($data)
+    {
+     $data = trim($data);
+     $data = stripslashes($data);
+     $data = htmlspecialchars($data);
+    
+        return $data;
+    };
     // Vérification des informations de connexion (code de connexion ici)
     if ($username === 'admin' && $password === 'password') {
         $_SESSION['user'] = $username;

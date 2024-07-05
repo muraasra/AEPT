@@ -2,7 +2,7 @@
 <html lang="en">
 
   <head>
-    <title> A.E.P.T. &mdash;</title>
+    <title>A.E.P.T. &mdash;</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -41,12 +41,12 @@
 
       <header class="site-navbar site-navbar-target" role="banner">
 
-        <div class="container">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
           <div class="row align-items-center position-relative">
 
             <div class="col-3 ">
               <div class="site-logo">
-                <a href="index.html">A.E.P.T.</a>
+                <a href="project.php" class="btn btn-info">Retour</a>
               </div>
             </div>
 
@@ -56,96 +56,112 @@
               <span class="d-inline-block d-lg-none"><a href="#" class="text-white site-menu-toggle js-menu-toggle py-5 text-white"><span class="icon-menu h3 text-white"></span></a></span>
 
               
-
-              <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
-                <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li ><a href="index.html" class="nav-link">Home</a></li>
-                  <li class="active"><a href="actuality.html" class="nav-link">Our Actuality</a></li>
-                  <li><a  href="project.html" class="nav-link">Our Achievement</a></li>
-                  <li><a href="contact.html" class="nav-link">Contact us</a></li>
-                  <li><a href="about.html" class="nav-link">About Us</a></li>
-
-                </ul>
-              </nav>
             </div>
 
             
           </div>
         </div>
+        <?php 
+              require "admin/database.php";
+              if (!empty($_GET['id'])) {
 
+                $id = $_GET['id'];
+              }else header("location: project.php");
+              $db=Database::connect();
+              $stmtAc=$db->query("SELECT * FROM actualites WHERE projet_id=".$id." ;"); 
+              $stmtPro=$db->query("SELECT * FROM projets WHERE id=".$id." ;");
+              $item=$stmtPro->fetch();
+              $date = date("now");
+              if(!empty($item["date_fin"]) && $date>=$item["date_fin"])  $statut="End";else $statut="En cours";
+              $stmtCa=$db->query("SELECT * FROM categories WHERE id='".$item['categorie_id']."'");
+              $stmtCa=$stmtCa->fetch();
+              $stmtRe=$db->query("SELECT * FROM regions WHERE id='".$item['region_id']."'");
+              $stmtRe=$stmtRe->fetch();
+        ?>
       </header>
 
     <div class="ftco-blocks-cover-1">
-      <div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('images/img_1.jpg')">
+      <div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('images/<?php echo $item['image'];?>')">
         <div class="container">
           <div class="row align-items-center justify-content-center text-center">
             <div class="col-md-7">
-              <h1 class="mb-3">Actuality</h1>
-              <p>Desribe actuality here very hard Desribe actuality here very hard Desribe actuality here very hard</p>
-              <p><a href="#" class="btn btn-info">Learn More</a></p>
+              <h1 class="mb-3"><?php echo $item['titre'];?></h1>
+              <p><?php echo $item['description'];?></p>
+              <p><a href="#site-section" class="btn btn-info" data-aos="fade-up" data-aos-delay="100">Learn More</a></p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="site-section">
-      <div class="container">
-        <div class="row justify-content-center  mb-5">
-          <div class="col-md-7 text-center">
-            <h3 class="bigTitle  text-center">Our actuality </h3>
+      
+        
+        
+        <div class="container-fluid pl-5 pr-5 projectHeader" id="site-section" data-aos="fade-up" data-aos-delay="100">
+          
+              <div class="projectTitle bigTitle ">
+                <b><?php echo $item['titre'];?></b>
+
+              </div>
+              <div class="contentTitle projectHeader">
+              <h3 class="date_article projectHeader">Date Beginning: <b><?php echo $item['date_debut'];?></b></h3>
+              <h3 class="date_article projectHeader">Statut: <b><?php echo $statut; ?></b></h3>
+              <h3 class="date_article projectHeader">Region: <b><?php echo $stmtRe['nom']; ?></b></h3>
+              <h3 class="date_article projectHeader">Category: <b><?php echo $stmtCa['nom']; ?></b></h3>
+              <!-- <h3 class="date_article projectHeader">Date End: <b><?php //echo $item['date_fin']; ?></b></h3> -->
+              <br>
+              <p class="capitalize"><?php echo '|       '.$item['description'];?></p>
+              </div>
+              <br>
+              <div class="container " style="text-align: center; color: aliceblue;">
+              <a href="faire_un_don.php"><h1 class="text-center btn btn-info" > Je fais un don </h1></a>
+              </div>
+              <br>
+        </div>
+        <div class="row">  
+              <?php  $i=0;
+              foreach($stmtAc as $item) {?>
+    <div class="container-fluid site-section pl-5 pr-5 <?php if($i%2==0)echo'bg-light';else echo''; $i++; ?>" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-center"> <b><?php echo $item['titre'];?></b></h2>
+        <br>
+        <div class="row">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="img-years">
+              <img src="images/<?php echo $item['image'];?>" alt="<?php echo $item['titre'];?>" class="img-fluid">
+            </div>
+
+          </div>
+          <div class="col-lg-5 ml-auto pl-lg-5 text-center">
+           
+            <p class="mb-5 lead ">Date de publication : <b><?php echo $item['date_publication'];?></b></p>
+            <p> <?php echo $item['description'];?></p>
           </div>
         </div>
-        <div class="row">
-          
+    </div>
 
-            
-              
-              <div class="item-1 h actu col-lg-4 col-md-6 mb-2">
-                <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-                <div class="item-1-contents">
-                  <h3>Title</h3>
-                  <h4 class="date_article">Date</h4>
-                  <p>Description of this article here place intDescription of this article here placeDescription of this article here placeDescription of this article here placeDescription of this article here place </p>
-                </div>
-                
-              </div>
-              <div class="item-1 h actu col-lg-4 col-md-6 mb-2">
-                <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-                <div class="item-1-contents">
-                  <h3>Title</h3>
-                  <h4 class="date_article">Date</h4>
-                  <p>Description of this article here place intDescription of this article here placeDescription of this article here placeDescription of this article here placeDescription of this article here place </p>
-                </div>
-              </div>
-              <div class="item-1 h actu col-lg-4 col-md-6 mb-2">
-                <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-                <div class="item-1-contents">
-                  <h3>Title</h3>
-                  <h4 class="date_article">Date</h4>
-                  <p>Description of this article here place intDescription of this article here placeDescription of this article here placeDescription of this article here placeDescription of this article here place </p>
-                </div>
-              </div>
+              <?php }?>
+
 
               
 
-              <div class="container " style="text-align: center; color: aliceblue;">
-                <h1 class="text-center btn btn info" > Je fais un don </h1>
-                 </div>
+              
+
+              
             
           
         </div>
 
         
       </div>
-    </div>
+      </div>
+      </div>
 
   
 
 
 
     <footer class="site-footer">
-      <div class="container">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row">
           <div class="col-lg-3">
             <img src="images/img_1.jpg" alt="Image" class="img-fluid mb-5">
@@ -161,7 +177,7 @@
             </li>
                   <li><a href="#">About Us</a></li>
                   <li><a href="#">Projects</a></li>
-                  <li><a href="#">actuality</a></li>
+                  <li><a href="#">Project</a></li>
                   <li><a href="#">Our Personnal number </a></li>
                   <li><a href="#">Contact Us </a></li>
                 </ul>
@@ -177,7 +193,7 @@
             </div>
           </div>
         </div>
-        <div class="row pt-5 mt-5 text-center">
+        <div class="row pt-5 mt-5 text-center" data-aos="fade-up" data-aos-delay="100">
           <div class="col-md-12">
             <div class="border-top pt-5">
               <p>

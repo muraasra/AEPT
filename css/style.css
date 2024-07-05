@@ -454,11 +454,12 @@ h1, h2, h3, h4, h5,
   position: absolute;
   top: 0;
   width: 100%;
-  padding: 1rem; }
+  padding: 50px; }
   @media (max-width: 991.98px) {
     .site-navbar {
-      padding-top: 3rem;
-      padding-bottom: 3rem; } }
+      position: fixed;
+      padding-top: 0px;
+      padding-bottom: 0px; } }
   .site-navbar .toggle-button {
     position: absolute;
     right: 0px; }
@@ -564,6 +565,7 @@ h1, h2, h3, h4, h5,
             padding: 9px 20px;
             display: block; }
             .site-navbar .site-navigation .site-menu .has-children .dropdown > li > a:hover {
+
               background: #f8f9fa;
               color: #ced4da; }
           .site-navbar .site-navigation .site-menu .has-children .dropdown > li.has-children > a:before {
@@ -1370,9 +1372,7 @@ h1, h2, h3, h4, h5,
   margin:0px;
 }
 .date_article{
-  position: absolute;
-  right: 0px;
-  top: 33px;
+  font-size: medium;
 
 }
 .montant-article{
@@ -1382,6 +1382,12 @@ h1, h2, h3, h4, h5,
   position: absolute;
   right: 0px;
   top: 60px;
+  color: white;
+  font-weight: 600;
+  background-color: #00c4cc;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  padding: 2px;
 
 }
 .custom-prev{
@@ -1415,10 +1421,10 @@ h1, h2, h3, h4, h5,
 }
 .partner{
   display: flex;
-  animation: scroll 10s linear infinite;
+  animation: scroll 30s linear infinite;
 }
 .partner div {
-  margin: 0 10px;
+  margin: 0 5px;
 }
 @keyframes scroll{
   0% {transform: translateX(0);}
@@ -1660,14 +1666,14 @@ h1, h2, h3, h4, h5,
 /*administrator*/
 .login-container{
   text-align: center;
-  background-color: #5c2e0549;
-  color: #5c2d05 ;
+  background-color: #a6c6c733;
+  color: #00c4cc ;
   height: 100vh;
   padding: 10%;
 }
 .login-container h1{
   font-weight: 400;
-  color: #5c2d05 !important;
+  color: #00c4cc !important;
 }
 .login-container form input{
   background: transparent !important;
@@ -1681,7 +1687,7 @@ h1, h2, h3, h4, h5,
 }
 .login-container form .btn-login{
   color: aliceblue !important;
-  background-color: #5c2d05 !important;
+  background-color: #00c4cc !important;
 
 }
 .color-admin-marron{
@@ -1689,7 +1695,7 @@ h1, h2, h3, h4, h5,
 }
 .login-container form .btn-login:hover{
   color: rgb(230, 237, 243) !important;
-  background-color: #402004 !important;
+  background-color: #04484a !important;
 
 }
 
@@ -1756,4 +1762,22 @@ h1, h2, h3, h4, h5,
 
 .button-container button {
   margin: 0 10px;
+}
+.projectTitle{
+  font-size: 40px;
+  text-transform: capitalize;
+  text-align: center;
+}
+.projectHeader{
+  font-size: 20px;
+}
+table .regionLink {
+  color: #00c4cc !important;
+}
+.thank-you{
+  text-align: center;
+  font-weight: 700;
+}
+.comments{
+  color: red;
 }

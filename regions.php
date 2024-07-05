@@ -2,7 +2,7 @@
 <html lang="en">
 
   <head>
-    <title>A.E.P.T. &mdash; Access a l'Education Pour Tous </title>
+    <title>A.E.P.T. &mdash;</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -41,12 +41,12 @@
 
       <header class="site-navbar site-navbar-target" role="banner">
 
-        <div class="container">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
           <div class="row align-items-center position-relative">
 
             <div class="col-3 ">
               <div class="site-logo">
-                <a href="index.html">A.E.P.T.</a>
+                <a href="index.php">A.E.P.T.</a>
               </div>
             </div>
 
@@ -59,11 +59,11 @@
 
               <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li ><a href="index.html" class="nav-link">Home</a></li>
-                  <li><a href="actuality.html" class="nav-link">Our Actuality</a></li>
-                  <li><a  href="project.html" class="nav-link">Our Achievement</a></li>
-                  <li class="active"><a href="contact.html" class="nav-link">Contact us</a></li>
-                  <li><a href="about.html" class="nav-link">About Us</a></li>
+                  <li ><a href="index.php" class="nav-link">Home</a></li>
+                  <li><a href="actuality.php" class="nav-link">Our Actuality</a></li>
+                  <li><a class="active" href="project.php" class="nav-link">Our Achievement</a></li>
+                  <li><a href="contact.php" class="nav-link">Contact us</a></li>
+                  <li><a href="about.php" class="nav-link">About Us</a></li>
 
                 </ul>
               </nav>
@@ -74,79 +74,87 @@
         </div>
 
       </header>
-
+    
     <div class="ftco-blocks-cover-1">
       <div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('images/img_1.jpg')">
-        <div class="container">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
           <div class="row align-items-center justify-content-center text-center">
             <div class="col-md-7">
-              <h1 class="mb-3">Contact Us</h1>
-              <p>We are available for all your request</p>
-              <p><a href="#" class="btn btn-info">Learn More</a></p>
+                <?php 
+    if(!empty($_GET)){
+        $id=$_GET["id"];
+      }
+      require "admin/database.php";
+      $db=Database::connect();
+      $stmtReg= $db->query("SELECT * FROM regions WHERE id='".$id."'");
+      $region=$stmtReg->fetch();
+    ?>
+              <h1 class="mb-3"><?php echo $region['nom']; ?></h1>
+              <p>List of the project realised and not-realised in town <?php echo $region['nom']; ?></p>
+              <p><a href="#site-section" class="btn btn-info" data-aos="fade-up" data-aos-delay="100">Learn More</a></p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="site-section bg-light" id="contact-section">
-      <div class="container">
-        <div class="row justify-content-center text-center">
-        <div class="col-7 text-center mb-5">
-          <h2>Contact Us Or Use This Form To Rent A Car</h2>
-          <p>We are available for all your requestWe are available for all your requestWe are available for all your request</p>
+    <div class="site-section" id="site-section">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center  mb-5">
+          <div class="col-md-7 text-center">
+            <h3 class="bigTitle  text-center">Our Project </h3>
+          </div>
         </div>
-      </div>
         <div class="row">
-          <div class="col-lg-8 mb-5" >
-            <form action="#" method="post">
-              <div class="form-group row">
-                <div class="col-md-6 mb-4 mb-lg-0">
-                  <input type="text" class="form-control" placeholder="First name">
+          
+
+            
+              <?php  
+              
+              $stmtPro=$db->query("SELECT * FROM projets WHERE region_id='".$id."' ;");
+              foreach($stmtPro as $item) { 
+                $date = date("now");
+              if(!empty($item["date_fin"]) && $date>=$item["date_fin"]) $statut="En cours";else $statut="End";
+              
+              ?>
+              <?php echo'<a href="project_view.php?id='.$item["id"].'">'; ?>
+              <div class="item-1 h actu col-lg-4 col-md-6 mb-2" data-aos="fade-up" data-aos-delay="100">
+                <img src="images/<?php echo $item['image'];?>" alt="Image" class="img-fluid">
+                <div class="item-1-contents">
+                  <h3><?php echo $item['titre'];?></h3>
+                  <h4 class="date_article">Date debut: <b><?php echo $item['date_debut'];?></b></h4><h4 class="date_article2"><?php echo $statut;?></h4>
+                 <?php echo '</a>'; ?>
+                  <p><?php echo $item['description'];?></p>
+                  <h4 class="montant_article"><?php echo $item['montant'];?> F</h4>
+                  <br>
+                  <div class="container " style="text-align: center; color: aliceblue;">  
+                    <a href="faire_un_don.php"><h1 class="text-center btn btn-info" > Je fais un don </h1></a>
+                 </div>
                 </div>
-                <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="name">
-                </div>
+                
               </div>
 
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <input type="text" class="form-control" placeholder="Email address">
-                </div>
-              </div>
+              <?php  }?>  
+              
+             
 
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <textarea name="" id="" class="form-control" placeholder="Write your message." cols="30" rows="10"></textarea>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="col-md-6 mr-auto">
-                  <input type="submit" class="btn btn-block btn-info text-white py-3 px-5" value="Send Message">
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="col-lg-4 ml-auto">
-            <div class="bg-white p-3 p-md-5">
-              <h3 class="text-black mb-4">Contact Info</h3>
-              <ul class="list-unstyled footer-link">
-                <li class="d-block mb-3">
-                  <span class="d-block text-black">Address:</span>
-                  <span>Djeleng, Bafoussam Ouest, ameroun</span></li>
-                <li class="d-block mb-3"><span class="d-block text-black">Phone:</span><span>+237 694 262 090</span></li>
-                <li class="d-block mb-3"><span class="d-block text-black">Email:</span><span>info@aept.uno</span></li>
-              </ul>
-            </div>
-          </div>
+              
+
+             
+            
+          
         </div>
+
+        
       </div>
     </div>
+
+  
 
 
 
     <footer class="site-footer">
-      <div class="container">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row">
           <div class="col-lg-3">
             <img src="images/img_1.jpg" alt="Image" class="img-fluid mb-5">
@@ -162,7 +170,7 @@
             </li>
                   <li><a href="#">About Us</a></li>
                   <li><a href="#">Projects</a></li>
-                  <li><a href="#">actuality</a></li>
+                  <li><a href="#">Project</a></li>
                   <li><a href="#">Our Personnal number </a></li>
                   <li><a href="#">Contact Us </a></li>
                 </ul>
@@ -178,7 +186,7 @@
             </div>
           </div>
         </div>
-        <div class="row pt-5 mt-5 text-center">
+        <div class="row pt-5 mt-5 text-center" data-aos="fade-up" data-aos-delay="100">
           <div class="col-md-12">
             <div class="border-top pt-5">
               <p>
@@ -190,6 +198,7 @@
         </div>
       </div>
     </footer>
+
     </div>
 
     <script src="js/jquery-3.3.1.min.js"></script>

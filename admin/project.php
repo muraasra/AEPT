@@ -71,7 +71,8 @@ if (!isset($_SESSION['user'])) {
                   <li><a href="contact.php" class="nav-link ">Contact</a></li>
                   <li><a href="partner.php" class="nav-link ">partner</a></li>
                   <li ><a href="testimonies.php" class="nav-link ">Testimonies</a></li>
-                </ul>
+                  <li ><a href="logout.php" class="nav-link ">Log-out</a></li>
+                  </ul>
               </nav>
             </div>
 
@@ -86,14 +87,14 @@ if (!isset($_SESSION['user'])) {
 
 
         <h1>Gestion des projets</h1>
-        <a href="projects_add.php" class="btn btn-info" style="position: absolute;right:0">+ Ajouter un projet   </a>
+        <a href="projects_add.php" class="btn btn-info" style="position: absolute;right:0"><span class="icon-plus"></span> Add new    </a>
         <table class="table table-striped table-bordered table-borderless " style="justify-content: space-evenly;">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
+                <th class="col-lg-3  col-md-2">Nom</th>
+                    <th class="col-lg-4  col-md-4">Description</th>
+                    <th class="col-lg-2  col-md-2">Statut</th>
+                    <th class="col-lg-3  col-md-4">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -104,8 +105,9 @@ if (!isset($_SESSION['user'])) {
                         <td><?php echo $project['description']; ?></td>
                         <td><?php echo $project['date_fin']; ?></td>
                         <td>
-                            <a href="projects_edit.php?id=<?php echo $project['id']; ?>" class="btn btn-info">Modifier</a>
-                            <a href="projects_delete.php?id=<?php echo $project['id']; ?>" class="btn btn-danger">Supprimer</a>
+                            <a href="projects_edit.php?id=<?php echo $project['id']; ?>" class="btn btn-info"><span class="icon-edit"></span></a>
+                            <a href="projects_view_admin.php?id=<?php echo $project['id']; ?>" class="btn btn-dark"> <span class="icon-eye"></span></a>
+                            <?php echo "<button class='btn btn-danger' onclick=\"confirmDelete(" . $project["id"] . ")\"><span class='icon-trash-o'></span></button>"; ?>
                         </td>
                     </tr>
                 <?php } ?>
@@ -113,7 +115,14 @@ if (!isset($_SESSION['user'])) {
         </table>
     
                     
-
+        <script>
+function confirmDelete(id) {
+    if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+        // Exécuter la requête de suppression en PHP
+        window.location.href = "delete/project.php?id=" + id;
+    }
+}
+</script>
 
 
 

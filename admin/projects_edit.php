@@ -130,9 +130,9 @@ if (!empty($_POST)) {
 }
 function checkInput($data)
 {
-    // $data = trim($data);
-    // $data = stripslashes($data);
-    // $data = htmlspecialchars($data);
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
 
     return $data;
 };
@@ -174,7 +174,7 @@ function checkInput($data)
             </h1><br>
             <form class="form" action="<?php echo'projects_edit.php?id='.$id;?>" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name">Nom:</label>
+                    <label for="name">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="name" value="<?php echo $name ?>">
                     <span class="help-inline"><?php echo $nameError; ?></span>
 
@@ -186,24 +186,26 @@ function checkInput($data)
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6">
-                      <label for="description">Date debut :</label>
+                      <label for="description">Date begining :</label>
                     <input type="date" class="form-control" name="dateDebut" id="dateDebut" placeholder="dateDebut" value="<?php echo $dateDebut ?>">
                     <span class="help-inline"><?php echo $dateDebutError; ?></span>
                   
                     </div>
                    
                     <div class="col-md-6">
-                    <label for="description">Date fin :</label>
+                    <label for="description">Date of end :</label>
                     <input type="date" class="form-control" name="dateFin" id="dateFin" placeholder="dateFin" value="<?php echo $dateFin ?>">
                     <span class="help-inline"><?php echo $dateFinError; ?></span>
                     </div> 
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-4">
+            <div class="form-group row">
+                <div class="col-md-4">
+                <label for="name">Price:</label>
                     <input type="number" step="100" class="form-control" name="montant" id="montant" placeholder="Prix (en F) :" value="<?php echo $montant ?>">
                     <span class="help-inline"><?php echo $montantError; ?></span>
                 </div>
                 <div class="col-md-4">
+                <label for="name">Category:</label>
                     <select class="form-control" id="categorie" name="categorie">
                         <?php
                         $db = Database::connect();
@@ -221,6 +223,7 @@ function checkInput($data)
                     <span class="help-inline"><?php echo $categoryError; ?></span>
                 </div>
                 <div class="col-md-4">
+                <label for="name">Region:</label>
                         <select class="form-control" id="region" name="region">
                             <?php
                             $db = Database::connect();
@@ -237,21 +240,19 @@ function checkInput($data)
                         </select>
                         <span class="help-inline"><?php echo $categoryError; ?></span>
                 </div>
+                </div>
                 <div class="form-group">
                         <label> image: </label>
                         <p><?php echo $image; ?></p>
-                        <label for="image">Selectionner une image: </label>
+                        <label for="image">Selection of image: </label>
                         <input type="file" id="image" name="image">
                         <span class="help-inline"><?php echo $imageError; ?></span>
                     </div>
 
                 <br>
                 <div class="form-action">
-                    <button type="submit" class="btn btn-success "><span class="glyphicon 
-                    glyphicon-pencil"></span> Ajouter</button>
-                    <button class="btn btn-login" type="submit">Se connecter</button>
-                    <a class="btn btn-primary " href="project.php"><span class="glyphicon 
-                    glyphicon-arrow-left"></span> Retour</a>
+                <a class="btn btn-primary " href="project.php"><span class="icon-arrow-left"></span> Back</a>
+                <button type="submit" class="btn btn-info "><span class="icon-pencil"></span> Edit</button>
 
                 </div>
             </form>
